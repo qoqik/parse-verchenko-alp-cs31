@@ -1,13 +1,13 @@
 require 'nokogiri'
 require 'open-uri'
 
-url = 'https://www.hospitalsafetygrade.org/all-hospitals'
-html = URI.open(url)
-doc = Nokogiri::HTML(html)
+target_url = 'https://www.hospitalsafetygrade.org/all-hospitals'
+web_page = URI.open(target_url)
+html_document = Nokogiri::HTML(web_page)
 
-doc.css('#BlinkDBContent_849210 ul li a').each do |element|
-  href = element['href']
-  hospital_id = href.split('/').last
-  hospital_name = element.text
-  puts "ID: #{hospital_id}, Name: #{hospital_name}"
+html_document.css('#BlinkDBContent_849210 ul li a').each do |item|
+  link_href = item['href']
+  id_from_link = link_href.split('/').last
+  hospital_name = item.text
+  puts "Hospital ID: #{id_from_link} | Hospital Name: #{hospital_name}"
 end
